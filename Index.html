@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our TimeLine</title>
+    <!-- Importing new cinematic font --><link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Lora:wght@300;400;500;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        /* Global Reset and Base Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', 'Inter', sans-serif;
+            overflow: hidden; /* Hide scrollbars for the moving background */
+            height: 100vh;
+            position: relative;
+            color: #fff;
+            background-color: #000;
+        }
+
+        /* --- Full-screen ROMANTIC CREAM/ROSE Background (fills vacant space) --- */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -3; /* Behind everything */
+            background: 
+                /* Muted rose glow spots */
+                radial-gradient(circle at 15% 50%, rgba(180, 100, 120, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 85% 50%, rgba(160, 80, 100, 0.15) 0%, transparent 40%),
+                /* Subtle cream highlights */
+                radial-gradient(circle at 50% 15%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 50% 85%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                #fcf7f7; /* Base warm cream/antique white color */
+            background-size: 200% 200%;
+            animation: cosmicGradientShift 60s ease-in-out infinite alternate;
+        }
+
+        @keyframes cosmicGradientShift {
+            0% {
+                background-position: 0% 0%;
+            }
+            100% {
+                background-position: 100% 100%;
+            }
+        }
+
+        /* --- Image Carousel Background Styling: COLLAGE EFFECT (FULL HEIGHT) --- */
+        .background-carousel {
+            position: fixed;
+            top: 0; 
+            left: 0;
+            width: auto;
+            min-width: 192vw; /* Desktop: 6 * 32vw */
+            height: 100%; /* Full height */
+            display: flex; 
+            align-items: center; /* Vertically center the collage strip within the full height */
+            justify-content: flex-start;
+            animation: scrollImages 40s linear infinite; 
+            z-index: -2; 
+            opacity: 0.9; /* Slightly increased for better image presence */
+            overflow: visible; 
+            padding: 5vh 0; /* Padding for vertical centering effect */
+        }
+
+        .background-carousel img {
+            width: 30vw; 
+            height: 45vh; 
+            object-fit: cover; 
+            flex-shrink: 0; 
+            margin-right: 2vw; 
+            border-radius: 12px; 
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4); 
+            filter: brightness(0.98); /* Less filter to show image color better */
+            transition: all 0.5s ease-in-out;
+        }
+
+        /* Keyframe animation: Scrolls exactly 4 image blocks (30vw width + 2vw margin) */
+        @keyframes scrollImages {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(calc(-4 * (30vw + 2vw))); 
+            }
+        }
+
+        /* --- Animated Foreground Elements (Roses, Stars, Sparkles) --- */
+        .romantic-elements {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0; 
+        }
+
+        .element {
+            position: absolute;
+            font-size: 24px;
+            opacity: 0.7; 
+            color: #b08d57; /* Rose Gold/Copper color */
+            animation: floatAndRotate 20s infinite linear;
+        }
+
+        @keyframes floatAndRotate {
+            0% {
+                transform: translateY(110vh) rotate(0deg) scale(0.5);
+                opacity: 0;
+            }
+            50% { /* Muted opacity shift */
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-10vh) rotate(360deg) scale(1.2);
+                opacity: 0;
+            }
+        }
+        
+        /* Main Content Container & Title Styling (Positioned at Top) */
+        .container {
+            /* Now set to be a full-height overlay, but content is pinned to the top */
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh; 
+            z-index: 1; 
+            display: flex;
+            flex-direction: column; 
+            justify-content: flex-start; /* Pin content to the top */
+            align-items: center; 
+            /* Adjusted padding to match the new background gradient below */
+            padding: 50px 20px 20px 20px; 
+            
+            /* Subtle fade gradient uses deep rose/burgundy to frame the top */
+            background: linear-gradient(to bottom, rgba(138, 51, 77, 0.15) 0%, rgba(255, 255, 255, 0) 25%);
+        }
+
+        .main-title {
+            font-family: 'Lora', serif; /* Minimalist romantic font */
+            font-weight: 300; 
+            font-size: 58px; 
+            color: #333; /* Darker text for contrast over light background */
+            /* Enhanced warm rose-gold glow */
+            text-shadow: 
+                0 0 10px rgba(255, 255, 255, 0.8), /* Stronger white core */
+                0 0 20px rgba(235, 212, 182, 0.6), /* Rose gold outer glow */
+                0 0 35px rgba(255, 192, 203, 0.4); /* Faint pink shimmer */
+            text-align: center;
+            padding: 0;
+            margin-bottom: 5px;
+            animation: main-title-fade 15s ease-in-out infinite alternate; 
+        }
+
+        .main-subtitle {
+            font-family: 'Poppins', sans-serif; 
+            font-weight: 300; 
+            font-size: 18px; 
+            letter-spacing: 2px; 
+            color: #555; /* Slightly muted dark text */
+            text-shadow: 
+                0 0 8px rgba(255, 255, 255, 0.6); /* Cleaner, tighter glow */
+            text-align: center;
+            padding: 0;
+            animation: main-title-fade 15s ease-in-out infinite alternate; 
+            
+            /* Constrain width to align with main title's rendered text (A Timeless Love Story) */
+            max-width: 450px; 
+            margin-left: auto;
+            margin-right: auto;
+            width: 90%; 
+            white-space: nowrap; 
+            overflow: hidden; 
+            text-overflow: ellipsis; 
+        }
+        
+        @keyframes main-title-fade {
+            0% {
+                opacity: 0.8;
+                transform: translateY(0);
+            }
+            50% {
+                opacity: 1;
+                transform: translateY(-5px);
+            }
+            100% {
+                opacity: 0.8;
+                transform: translateY(0);
+            }
+        }
+
+        /* --- New Navigation Box Styling (Bottom Center) --- */
+        .nav-box {
+            position: fixed; 
+            bottom: 100px; 
+            left: 50%;
+            transform: translateX(-50%); 
+            z-index: 5; 
+            
+            background: rgba(255, 255, 255, 0.4); /* Clean cream/white glass */
+            backdrop-filter: blur(15px); /* Stronger blur */
+            /* *** UPDATED BORDER RADIUS FOR PILL SHAPE *** */
+            border-radius: 50px; 
+            padding: 15px 40px; /* Increased horizontal padding */
+            
+            /* Enhanced romantic glow */
+            box-shadow: 
+                0 0 15px rgba(255, 255, 255, 0.9), /* Brighter white inner glow */
+                0 5px 25px rgba(0, 0, 0, 0.3); /* Deep outer shadow */
+            
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none; 
+            transition: all 0.3s ease;
+        }
+
+        .nav-box:hover {
+            background: rgba(255, 255, 255, 0.6);
+            transform: translateX(-50%) translateY(-3px) scale(1.03);
+            box-shadow: 
+                0 0 25px rgba(255, 255, 255, 1), /* Stronger hover glow */
+                0 8px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .nav-box-text {
+            font-family: 'Poppins', sans-serif;
+            font-size: 18px;
+            font-weight: 500;
+            color: #8a334d; /* Deep rose/burgundy text for contrast */
+            letter-spacing: 1.5px; 
+            text-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+            margin: 0;
+            white-space: nowrap;
+        }
+
+
+        /* Audio Control */
+        .audio-control {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: rgba(255, 255, 255, 0.4); /* Lighter control button */
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            width: 55px;
+            height: 55px;
+            color: #8a334d; /* Deep rose color for icon */
+            font-size: 20px;
+            cursor: pointer;
+            backdrop-filter: blur(15px);
+            transition: all 0.3s ease;
+            z-index: 10;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .audio-control:hover {
+            background: rgba(255, 255, 255, 0.6);
+            transform: scale(1.15) rotate(5deg);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            
+            .container {
+                /* ADJUSTED TOP PADDING FOR MOBILE: Moved slightly up (from 50px to 35px) */
+                padding: 35px 15px 10px 15px; 
+                background: linear-gradient(to bottom, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0) 40%); /* Wider fade area */
+            }
+
+            .main-title {
+                font-size: 40px; 
+            }
+
+            .main-subtitle {
+                font-size: 14px; /* Further reduced for mobile */
+                letter-spacing: 1px;
+                max-width: 300px;
+            }
+            
+            .nav-box {
+                /* ADJUSTED: Moved up from 40px to 60px */
+                bottom: 60px;
+                padding: 10px 25px; /* Adjust horizontal padding for mobile pill shape */
+                border-radius: 40px;
+            }
+            .nav-box-text {
+                font-size: 14px;
+                letter-spacing: 1px;
+            }
+            
+            /* Carousel remains centered but doesn't need top adjustment anymore */
+            .background-carousel {
+                min-width: 318vw;
+                padding: 5vh 0;
+                top: 0;
+            }
+            .background-carousel img {
+                width: 50vw; 
+                height: 35vh;
+                margin-right: 3vw;
+            }
+            @keyframes scrollImages {
+                0% {
+                    transform: translateX(0);
+                }
+                100% {
+                    transform: translateX(calc(-4 * (50vw + 3vw))); 
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Full-screen Starry Background provided by body::before -->
+    <!-- Image Carousel Background -->
+    <div class="background-carousel">
+        <!-- Images (Corrected file names) -->
+        <img src="./Images/Image 1.jpg" alt="Romantic moment 1">
+        <img src="./Images/Image 2.jpg" alt="Romantic moment 2">
+        <img src="./Images/Image 3.jpg" alt="Romantic moment 3">
+        <img src="./Images/Image 4.jpg" alt="Romantic moment 4">
+        <!-- Duplicate the first two images to create a seamless loop transition -->
+        <img src="./Images/Image 1.jpg" alt="Romantic moment 1 - duplicate">
+        <img src="./Images/Image 2.jpg" alt="Romantic moment 2 - duplicate">
+        <img src="./Images/Image 3.jpg" alt="Romantic moment 1 - duplicate">
+        <img src="./Images/Image 4.jpg" alt="Romantic moment 2 - duplicate">
+    </div>
+
+    <!-- Animated Foreground Elements (Roses, Stars, Sparkles) -->
+    <div class="romantic-elements" id="elementsContainer"></div>
+
+    <!-- Main Content (Title and Subtitle) -->
+    <div class="container">
+        <h1 class="main-title">A Timeless Love Story</h1>
+        <p class="main-subtitle">A chapter written in stardust and light.</p>
+    </div>
+
+    <!-- --- New Navigation Box --- -->
+    <a href="Main.html" class="nav-box">
+        <p class="nav-box-text">Let's turn the page. Our story awaits... ✨</p>
+    </a>
+    <!-- --------------------------- -->
+
+    <!-- Audio Element -->
+    <audio id="backgroundAudio" loop>
+        <source src="Song.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Audio Control Button -->
+    <button class="audio-control" onclick="toggleAudio()" id="audioBtn">🔇</button>
+
+    <script>
+        // --- Create floating romantic elements (stars, roses, sparkles) ---
+        function createFloatingElements() {
+            const container = document.getElementById('elementsContainer');
+            const elements = ['💖', '✨', '🌹', '🌟', '💫']; 
+            
+            setInterval(() => {
+                const element = document.createElement('div');
+                element.className = 'element';
+                element.innerHTML = elements[Math.floor(Math.random() * elements.length)]; 
+                element.style.left = Math.random() * 100 + '%';
+                element.style.fontSize = (Math.random() * 15 + 18) + 'px';
+                container.appendChild(element);
+
+                setTimeout(() => {
+                    if (element.parentNode) {
+                        element.parentNode.removeChild(element);
+                    }
+                }, 20000);
+            }, 1000);
+        }
+
+        // --- Audio Control Logic ---
+        let audioPlaying = false;
+        const audio = document.getElementById('backgroundAudio');
+        const audioBtn = document.getElementById('audioBtn');
+        
+        window.addEventListener('load', () => {
+            audio.volume = 0.5;
+            audio.play().then(() => {
+                audioPlaying = true;
+                audioBtn.innerHTML = '🔊';
+            }).catch(e => {
+                console.log('Audio autoplay prevented. User must click to enable.');
+                audioBtn.innerHTML = '🔇';
+            });
+        });
+
+        function toggleAudio() {
+            if (audioPlaying) {
+                audio.pause();
+                audioBtn.innerHTML = '🔇';
+                audioPlaying = false;
+            } else {
+                audio.play().then(() => {
+                    audioBtn.innerHTML = '🔊';
+                    audioPlaying = true;
+                }).catch(e => {
+                    console.error('Audio play failed on toggle:', e);
+                });
+            }
+        }
+
+        document.addEventListener('click', () => {
+            if (!audioPlaying && audio.paused) {
+                audio.play().then(() => {
+                    audioPlaying = true;
+                    audioBtn.innerHTML = '🔊';
+                }).catch(e => {
+                     console.log('Audio activation on first click failed.');
+                });
+            }
+        }, { once: true });
+
+        // Initialize animations
+        createFloatingElements();
+    </script>
+</body>
+</html>
